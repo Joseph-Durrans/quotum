@@ -1,1 +1,9 @@
-//
+//global
+@import 'global.scss';
+
+//variables
+@import 'variables.scss';
+
+//partials
+@import 'partials/header_footer.scss';
+@import 'partials/home.scss';
