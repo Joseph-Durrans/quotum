@@ -7,6 +7,12 @@ body{
     background-color: #000000;
     color: #ffffff;
     letter-spacing: 3px;
+
+    background-image: url('../storage/img/background.svg');
+    background-repeat: repeat-y;
+    background-position: center;
+    background-size: contain;
+    background-position-y: 140px;
 }
 
 h1 { font-size: 70px; }
@@ -20,5 +26,3 @@ h1,h2,h3,h4,h5,h6,p {
     line-height: 1.45;
 }
 
-// a{ font-size: 20px; }
-// p{ font-size: 20px; }

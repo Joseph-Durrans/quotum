@@ -7,6 +7,11 @@ body {
   background-color: #000000;
   color: #ffffff;
   letter-spacing: 3px;
+  background-image: url("../storage/img/background.svg");
+  background-repeat: repeat-y;
+  background-position: center;
+  background-size: contain;
+  background-position-y: 140px;
 }
 
 h1 {
@@ -37,15 +42,15 @@ h1, h2, h3, h4, h5, h6, p {
   line-height: 1.45;
 }
 
-.quotum-header {
-  background-color: #282828;
-}
 .quotum-header .header-row {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  height: 150px;
 }
 .quotum-header .header-row .title {
+  margin: 0;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 .quotum-header .header-row .links {
   height: 100%;
@@ -68,4 +73,15 @@ h1, h2, h3, h4, h5, h6, p {
 .quotum-welcome .text-col {
   padding: 20px 40px 20px 40px;
   background-color: #282828;
+}
+.quotum-welcome .background-element {
+  position: absolute;
+  background-image: url("../storage/img/graph_blend.png");
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
 }

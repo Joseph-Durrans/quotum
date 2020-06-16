@@ -12,16 +12,18 @@
     <title>Quotum</title>
 </head>
 <body>
+
     <header>
         <div class="container-fluid quotum-header">
             <div class="container">
                 <div class="row header-row">
-                    <div class="col-lg-6">
-                        <h1 class="title">Quotum</h1>
+                    <div class="col-lg-6 title">
+                        <h1>Quotum</h1>
                     </div>
                     <div class="col-lg-6">
                         @if (Route::has('login'))
                             <div class="links">
+                                <nav class="link-animation">
                                 @auth
                                     <a href="{{ url('/user-panel') }}">User Panel</a>
                                 @else
@@ -31,6 +33,7 @@
                                         <a href="{{ route('register') }}">Register</a>
                                     @endif
                                 @endauth
+                                </nav>
                             </div>
                         @endif
                     </div>
