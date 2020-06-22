@@ -20,6 +20,15 @@
                 color: #ffffff;
                 text-decoration: none;
                 border: 2px solid #ffffff;
+
+                &:hover{
+                    background-color: #000000;
+                }
+
+                &.dropdown-item{
+                    margin: 0;
+                }
+
             }
         }
     }

@@ -22,19 +22,35 @@
                     </div>
                     <div class="col-lg-6">
                         @if (Route::has('login'))
-                            <div class="links">
-                                <nav class="link-animation">
-                                @auth
-                                    <a href="{{ url('/user-panel') }}">User Panel</a>
-                                @else
-                                    <a href="{{ route('login') }}">Login</a>
-            
-                                    @if (Route::has('register'))
-                                        <a href="{{ route('register') }}">Register</a>
-                                    @endif
-                                @endauth
-                                </nav>
-                            </div>
+                            @if (Route::current()->getName() == 'home')
+                                <div class="links">
+                                    <nav class="link-animation">
+                                    @auth
+                                        <a href="{{ route('loggedInPanel') }}">User Panel</a>
+                                    @else
+                                        <a href="{{ route('login') }}">Login</a>
+                
+                                        @if (Route::has('register'))
+                                            <a href="{{ route('register') }}">Register</a>
+                                        @endif
+                                    @endauth
+                                    </nav>
+                                </div>
+                            @elseif (Route::current()->getName() == 'loggedInPanel')
+                                <div class="links">
+                                    <nav class="link-animation">
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                            document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                    </nav>
+                                </div>
+                            @endif
                         @endif
                     </div>
                 </div>

@@ -66,10 +66,6 @@ h1, h2, h3, h4, h5, h6, p {
       color: #ffffff;
       text-decoration: none;
       border: 2px solid #ffffff; }
-      .quotum-header .header-row .links a:hover {
-        background-color: #000000; }
-      .quotum-header .header-row .links a.dropdown-item {
-        margin: 0; }
 
 .quotum-welcome {
   margin-top: 100px; }

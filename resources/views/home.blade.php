@@ -1,6 +1,7 @@
 @extends('layouts.header_footer')
 
 @section('content')
+
 <div class="quotum-welcome">
 
     <div class="background-element"></div>
@@ -29,7 +30,5 @@
         </div>
     </div>
 </div>
-
-
 
 @endsection

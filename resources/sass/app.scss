@@ -1,9 +1,14 @@
-//global
-@import 'global.scss';
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
 
-//variables
+// Global
+@import 'global.scss';
 @import 'variables.scss';
 
-//partials
+// Partials
 @import 'partials/header_footer.scss';
-@import 'partials/home.scss';
+
+// Pages
+@import 'pages/home.scss';
+
+
