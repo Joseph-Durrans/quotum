@@ -1,4 +1,4 @@
-.quotum-welcome{
+.quotum-home{
     margin-top: 100px;
 
     .text-col{
@@ -6,16 +6,16 @@
         background-color: $mine-shaft;
     }
 
-    .background-element{
-        position: absolute;
-        background-image: url('../storage/img/graph_blend.png');
-        background-repeat: no-repeat;
-        height: 100%;
-        width: 100%;
-        left: 0;
-        right: 0;
-        margin-left: auto;
-        margin-right: auto;
-    }
+    // .background-element{
+    //     position: absolute;
+    //     background-image: url('../storage/img/graph_blend.png');
+    //     background-repeat: no-repeat;
+    //     height: 100%;
+    //     width: 100%;
+    //     left: 0;
+    //     right: 0;
+    //     margin-left: auto;
+    //     margin-right: auto;
+    // }
 }
 

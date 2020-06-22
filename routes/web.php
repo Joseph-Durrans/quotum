@@ -10,24 +10,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/user-panel', 'loggedInPanelController@index')->name('loggedInPanel');
 
-    Route::get('/stocks', 'StocksController@index')->name('stocks');
+    Route::get('/user-panel/stocks', 'StocksController@index')->name('stocks');
 
-    Route::get('/stocks/{stock}', function ($stock) {
-
-        $stocks = [
-            'BARC' => [
-                'title' => 'Barclays',
-                'content' => 'Barclays PLC shares'
-            ],
-            'RYA' => [
-                'title' => 'Ryanair',
-                'content' => 'Ryanair Holdings plc shares'
-            ]
-        ];
-
-        return view('single_stock',[
-            'post' => $stocks[$stock]
-        ]);
-    });
-
+    Route::get('/user-panel/stocks/{stock}', 'SingleStockController@index')->name('stock');
 });
+

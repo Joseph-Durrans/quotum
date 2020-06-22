@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Nunito");
 html {
-  font-family: 'Montserrat', sans-serif; }
+  font-family: "Montserrat", sans-serif;
+}
 
 body {
   font-size: 20px;
@@ -10,79 +11,92 @@ body {
   background-image: url("../storage/img/background.svg");
   background-repeat: repeat-y;
   background-position: center;
-  background-size: contain;
-  background-position-y: 140px; }
+  background-size: auto;
+  background-position-y: 140px;
+}
 
 h1 {
-  font-size: 70px; }
+  font-size: 70px;
+}
 
 h2 {
-  font-size: 60px; }
+  font-size: 60px;
+}
 
 h3 {
-  font-size: 50px; }
+  font-size: 50px;
+}
 
 h4 {
-  font-size: 40px; }
+  font-size: 40px;
+}
 
 h5 {
-  font-size: 30px; }
+  font-size: 30px;
+}
 
 h6 {
-  font-size: 20px; }
+  font-size: 20px;
+}
 
 h1, h2, h3, h4, h5, h6, p {
-  line-height: 1.45; }
+  line-height: 1.45;
+}
 
 .quotum-header .header-row {
-  height: 150px; }
-  .quotum-header .header-row .title {
-    margin: 0;
-    text-transform: uppercase;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: start;
-    -ms-flex-pack: start;
-    justify-content: flex-start; }
-  .quotum-header .header-row .links {
-    height: 100%;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: end;
-    -ms-flex-pack: end;
-    justify-content: flex-end; }
-    .quotum-header .header-row .links a {
-      margin-left: 20px;
-      padding: 10px 20px 10px 20px;
-      text-transform: uppercase;
-      color: #ffffff;
-      text-decoration: none;
-      border: 2px solid #ffffff; }
-      .quotum-header .header-row .links a:hover {
-        background-color: #000000; }
-      .quotum-header .header-row .links a.dropdown-item {
-        margin: 0; }
+  height: 150px;
+}
+.quotum-header .header-row .title {
+  margin: 0;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.quotum-header .header-row .links {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.quotum-header .header-row .links a {
+  margin-left: 20px;
+  padding: 10px 20px 10px 20px;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+  border: 2px solid #ffffff;
+}
+.quotum-header .header-row .links a:hover {
+  background-color: #000000;
+}
+.quotum-header .header-row .links a.dropdown-item {
+  margin: 0;
+}
 
-.quotum-welcome {
-  margin-top: 100px; }
-  .quotum-welcome .text-col {
-    padding: 20px 40px 20px 40px;
-    background-color: #282828; }
-  .quotum-welcome .background-element {
-    position: absolute;
-    background-image: url("../storage/img/graph_blend.png");
-    background-repeat: no-repeat;
-    height: 100%;
-    width: 100%;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto; }
+.quotum-home {
+  margin-top: 100px;
+}
+.quotum-home .text-col {
+  padding: 20px 40px 20px 40px;
+  background-color: #282828;
+}
+
+.user-panel {
+  margin-top: 100px;
+}
+.user-panel .text-col {
+  padding: 20px 40px 20px 40px;
+  background-color: #282828;
+}
+.user-panel .background-element {
+  position: absolute;
+  background-image: url("../storage/img/graph_blend.png");
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
