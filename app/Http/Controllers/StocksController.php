@@ -26,9 +26,9 @@ class StocksController extends Controller
     //     return json_decode($symbolData, true);
     // }
 
-    public function getDatabaseData(){
-        $gbSymbols = GbSymbols::all()->toArray();
-        $usSymbols = UsSymbols::all()->toArray();
+    public function getRandomDatabaseData(){
+        $gbSymbols = GbSymbols::orderBy('symbol', 'asc')->take(50)->get()->toArray();
+        $usSymbols = UsSymbols::orderBy('symbol', 'asc')->take(50)->get()->toArray();
 
         $allSymbols = array_merge($gbSymbols, $usSymbols);
         
@@ -36,9 +36,37 @@ class StocksController extends Controller
 
     }
 
+    public function getSearchDatabaseData($searchInput){
+        $gbSymbols = GbSymbols::where('symbol', strtoupper($searchInput))->get();
+        $usSymbols = UsSymbols::where('symbol', strtoupper($searchInput))->get();
+        
+        $searchedSymbol = array_merge($gbSymbols->toArray(), $usSymbols->toArray());
+
+        if($searchedSymbol){
+            return $searchedSymbol[0];
+        }
+        
+        return 'There Is No Stock Data For That Symbol';
+    }
+
     public function index()
     {
-        $DatabaseSymbolsData = self::getDatabaseData();
-        return view('stocks')->with('stock_symbol', $DatabaseSymbolsData);
+        $DatabaseSymbolsData = self::getRandomDatabaseData();
+        return view('stocks')->with('random_stock_symbols', $DatabaseSymbolsData);
+    }
+
+    public function search(Request $request)
+    {
+        $searchInput = $request->input('search');
+        $DatabaseSymbolsData = self::getRandomDatabaseData();
+        $DatabaseSearchSymbolsData = self::getSearchDatabaseData($searchInput);
+        var_dump($DatabaseSearchSymbolsData);
+        
+        if(is_array($DatabaseSearchSymbolsData)){
+            return view('stocks')->with('random_stock_symbols', $DatabaseSymbolsData)->with('search_stock_symbol', $DatabaseSearchSymbolsData);
+        }
+        else{
+            return view('stocks')->with('random_stock_symbols', $DatabaseSymbolsData)->with('search_not_found', $DatabaseSearchSymbolsData);
+        }
     }
 }
