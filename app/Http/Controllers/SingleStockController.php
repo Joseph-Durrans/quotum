@@ -7,8 +7,8 @@ use GuzzleHttp\Client;
 
 class SingleStockController extends Controller
 {
-    public function getStockSymbolData($client, $apiToken){
-    	$response = $client->request('GET', ('https://sandbox.iexapis.com/stable/ref-data/iex/symbols' . $apiToken));
+    public function getStockSymbolData($client, $apiToken, $filter){
+    	$response = $client->request('GET', ('https://sandbox.iexapis.com/stable/ref-data/region/gb/symbols?'. $filter . '&' . $apiToken));
     	$statusCode = $response->getStatusCode();
     	$body = $response->getBody()->getContents();
 
@@ -16,7 +16,7 @@ class SingleStockController extends Controller
     }
 
     public function getStockData($client, $apiToken, $stock){
-        $response = $client->request('GET', ('https://sandbox.iexapis.com/stable/stock/'. $stock . '/quote' . $apiToken));
+        $response = $client->request('GET', ('https://sandbox.iexapis.com/stable/stock/'. $stock . '/quote?' . $apiToken));
     	$statusCode = $response->getStatusCode();
     	$body = $response->getBody()->getContents();
 
@@ -24,9 +24,10 @@ class SingleStockController extends Controller
     }
 
     public function getAPIData($stock){
-        $apiToken = '?token=Tpk_c6eac6ec83af498380331eb5aa54b258';
+        $apiToken = 'token=Tpk_c6eac6ec83af498380331eb5aa54b258';
         $client = new Client();
-        $symbolData = self::getStockSymbolData($client, $apiToken);
+        $filter = 'filter=symbol';
+        $symbolData = self::getStockSymbolData($client, $apiToken, $filter);
         $apiData = json_decode($symbolData, true);
         foreach ($apiData as $singleApiData) {
             if (strtolower($singleApiData['symbol']) == strtolower($stock) ) {
