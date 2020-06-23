@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSymbolsTable extends Migration
+class CreateUsSymbolsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateSymbolsTable extends Migration
      */
     public function up()
     {
-        Schema::create('symbols', function (Blueprint $table) {
+        Schema::create('us_symbols', function (Blueprint $table) {
             $table->string('symbol')->primay();
             $table->string('exchange');
-            $table->string('region');   
             $table->string('currency');
             $table->timestamps();
         });
@@ -29,6 +28,6 @@ class CreateSymbolsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('symbols');
+        Schema::dropIfExists('us_symbols');
     }
 }

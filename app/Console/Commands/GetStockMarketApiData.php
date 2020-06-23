@@ -3,6 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use GuzzleHttp\Client;
+use App\GbSymbols;
+use App\UsSymbols;
 
 class GetStockMarketApiData extends Command
 {
@@ -39,10 +42,12 @@ class GetStockMarketApiData extends Command
     	$statusCode = $response->getStatusCode();
     	$usBody = $response->getBody()->getContents();
 
-        $body[] = json_decode($gbBody, true);
-        $body[] = json_decode($usBody, true);
+        $gbBodyArray['gb'] = json_decode($gbBody, true);
+        $usBodyArray['us'] = json_decode($usBody, true);
 
-    	return $body;
+        $body = array_merge($gbBodyArray, $usBodyArray);
+
+        return $body;
     }
 
     public function getAPIData(){
@@ -50,7 +55,25 @@ class GetStockMarketApiData extends Command
         $client = new Client();
         $filter =  'filter=symbol,exchange,region,currency';
         $symbolData = self::getStockSymbolData($client, $apiToken, $filter);
-        return json_decode($symbolData, true);
+        return $symbolData;
+    }
+
+    public function storeGbSymbolData($symbolData){
+        foreach ($symbolData as $symbol) {
+            $symbolEntry = GbSymbols::updateOrCreate(
+                ['symbol' => $symbol['symbol'], 'exchange' => $symbol['exchange']],
+                ['currency' => $symbol['currency']]
+            );
+        }
+    }
+
+    public function storeUsSymbolData($symbolData){
+        foreach ($symbolData as $symbol) {
+            $symbolEntry = UsSymbols::updateOrCreate(
+                ['symbol' => $symbol['symbol'], 'exchange' => $symbol['exchange']],
+                ['currency' => $symbol['currency']]
+            );
+        }
     }
 
     /**
@@ -60,6 +83,10 @@ class GetStockMarketApiData extends Command
      */
     public function handle()
     {
-        
+        $symbolData = self::getApiData();
+        self::storeGbSymbolData($symbolData['gb']);
+        echo 'gb done';
+        self::storeUsSymbolData($symbolData['us']);
+        echo 'us done';
     }
 }

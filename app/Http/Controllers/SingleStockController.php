@@ -4,16 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use App\GbSymbols;
+use App\UsSymbols;
 
 class SingleStockController extends Controller
 {
-    public function getStockSymbolData($client, $apiToken, $filter){
-    	$response = $client->request('GET', ('https://sandbox.iexapis.com/stable/ref-data/region/gb/symbols?'. $filter . '&' . $apiToken));
-    	$statusCode = $response->getStatusCode();
-    	$body = $response->getBody()->getContents();
+    // public function getStockSymbolData($client, $apiToken, $filter){
+    // 	$response = $client->request('GET', ('https://sandbox.iexapis.com/stable/ref-data/region/gb/symbols?'. $filter . '&' . $apiToken));
+    // 	$statusCode = $response->getStatusCode();
+    // 	$body = $response->getBody()->getContents();
 
-    	return $body;
-    }
+    // 	return $body;
+    // }
 
     public function getStockData($client, $apiToken, $stock){
         $response = $client->request('GET', ('https://sandbox.iexapis.com/stable/stock/'. $stock . '/quote?' . $apiToken));
@@ -26,20 +28,31 @@ class SingleStockController extends Controller
     public function getAPIData($stock){
         $apiToken = 'token=Tpk_c6eac6ec83af498380331eb5aa54b258';
         $client = new Client();
-        $filter = 'filter=symbol';
-        $symbolData = self::getStockSymbolData($client, $apiToken, $filter);
-        $apiData = json_decode($symbolData, true);
-        foreach ($apiData as $singleApiData) {
-            if (strtolower($singleApiData['symbol']) == strtolower($stock) ) {
-                $stockData = self::getStockData($client, $apiToken, $stock);
+        $correspondingGbSymbol = GbSymbols::where('symbol', strtoupper($stock))->first();
+        $correspondingUsSymbol = UsSymbols::where('symbol', strtoupper($stock))->first();
+        if(!$correspondingGbSymbol && !$correspondingUsSymbol){
+            abort(404);
+        }
+        elseif($correspondingGbSymbol && !$correspondingUsSymbol){
+            if(strtoupper($correspondingGbSymbol['symbol']) == strtoupper($stock)){
+                $singleStockData = json_decode(self::getStockData($client, $apiToken, $stock), true);
+                return $singleStockData;
             }
         }
-        return json_decode($stockData, true);
+        elseif($correspondingUsSymbol && !$correspondingGbSymbol){
+            if(strtoupper($correspondingUsSymbol['symbol']) == strtoupper($stock)){
+                $singleStockData = json_decode(self::getStockData($client, $apiToken, $stock), true);
+                return $singleStockData;
+            }
+        }
+        else{
+            abort(404);
+        }
     }
 
     public function index($stock)
     {
-        $singleApiData = self::getAPIData($stock);
-        return view('single_stock')->with('stock', $singleApiData);
+        $singleStockData = self::getAPIData($stock);
+        return view('single_stock')->with('stock', $singleStockData);
     }
 }
