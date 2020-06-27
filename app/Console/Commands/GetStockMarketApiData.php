@@ -4,8 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
-use App\GbSymbols;
-use App\UsSymbols;
+use App\LonSymbols;
+use App\NysSymbols;
 
 class GetStockMarketApiData extends Command
 {
@@ -14,7 +14,7 @@ class GetStockMarketApiData extends Command
      *
      * @var string
      */
-    protected $signature = 'command:getStockMarketApiData';
+    protected $signature = 'database:getStockMarketApiData';
 
     /**
      * The console command description.
@@ -33,12 +33,20 @@ class GetStockMarketApiData extends Command
         parent::__construct();
     }
 
-    public function getStockSymbolData($client, $apiToken, $filter){
-    	$response = $client->request('GET', ('https://sandbox.iexapis.com/stable/ref-data/region/gb/symbols?'. $filter . '&' . $apiToken));
+    protected $apiLonUrl;
+    protected $apiNysUrl;
+
+    public function assembleApiUrls($filter){
+        $this->apiLonUrl = env('IEX_CLOUD_TESTING_HOST') . '/stable/ref-data/exchange/lon/symbols?'. $filter . '&token=' . env('IEX_CLOUD_TESTING_TOKEN');
+        $this->apiNysUrl = env('IEX_CLOUD_TESTING_HOST') . '/stable/ref-data/exchange/nys/symbols?'. $filter . '&token=' . env('IEX_CLOUD_TESTING_TOKEN');
+    }
+
+    public function getStockSymbolData($client, $filter){
+    	$response = $client->request('GET', $this->apiLonUrl);
     	$statusCode = $response->getStatusCode();
     	$gbBody = $response->getBody()->getContents();
 
-        $response = $client->request('GET', ('https://sandbox.iexapis.com/stable/ref-data/region/us/symbols?'. $filter . '&' . $apiToken));
+        $response = $client->request('GET', $this->apiNysUrl);
     	$statusCode = $response->getStatusCode();
     	$usBody = $response->getBody()->getContents();
 
@@ -51,27 +59,27 @@ class GetStockMarketApiData extends Command
     }
 
     public function getAPIData(){
-        $apiToken = 'token=Tpk_c6eac6ec83af498380331eb5aa54b258';
+        $filter =  'filter=symbol,name,exchange,region,currency';
+        self::assembleApiUrls($filter);
         $client = new Client();
-        $filter =  'filter=symbol,exchange,region,currency';
-        $symbolData = self::getStockSymbolData($client, $apiToken, $filter);
+        $symbolData = self::getStockSymbolData($client, $filter);
         return $symbolData;
     }
 
     public function storeGbSymbolData($symbolData){
         foreach ($symbolData as $symbol) {
-            $symbolEntry = GbSymbols::updateOrCreate(
+            $symbolEntry = LonSymbols::updateOrCreate(
                 ['symbol' => $symbol['symbol'], 'exchange' => $symbol['exchange']],
-                ['currency' => $symbol['currency']]
+                ['name' => $symbol['name'], 'currency' => $symbol['currency']]
             );
         }
     }
 
     public function storeUsSymbolData($symbolData){
         foreach ($symbolData as $symbol) {
-            $symbolEntry = UsSymbols::updateOrCreate(
+            $symbolEntry = NysSymbols::updateOrCreate(
                 ['symbol' => $symbol['symbol'], 'exchange' => $symbol['exchange']],
-                ['currency' => $symbol['currency']]
+                ['name' => $symbol['name'], 'currency' => $symbol['currency']]
             );
         }
     }

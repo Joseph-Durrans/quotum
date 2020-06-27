@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('database:getStockMarketApiData')->weekdays()->timezone('America/New_York')->at('08:00', '09:00', '12:00', '13:00');
     }
 
     /**

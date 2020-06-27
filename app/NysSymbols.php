@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UsSymbols extends Model
+class NysSymbols extends Model
 {
-    protected $table = 'us_symbols';
+    protected $table = 'nys_symbols';
     protected $primaryKey = 'symbol';
     public $incrementing = false;
     protected $keyType = 'string';
-    protected $fillable = ['symbol', 'exchange', 'currency'];
+    protected $fillable = ['symbol', 'name', 'exchange', 'currency'];
 }

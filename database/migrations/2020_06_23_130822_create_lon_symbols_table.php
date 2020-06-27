@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGbSymbolsTable extends Migration
+class CreateLonSymbolsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateGbSymbolsTable extends Migration
      */
     public function up()
     {
-        Schema::create('gb_symbols', function (Blueprint $table) {
+        Schema::create('lon_symbols', function (Blueprint $table) {
             $table->string('symbol')->primay();
+            $table->string('name');
             $table->string('exchange');
             $table->string('currency');
             $table->timestamps();
@@ -28,6 +29,6 @@ class CreateGbSymbolsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gb_symbols');
+        Schema::dropIfExists('lon_symbols');
     }
 }
